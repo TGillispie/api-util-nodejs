@@ -1,0 +1,25 @@
+# Config Files
+.env*
+
+# Build files
+/dist
+*.gz
+/docs
+/tmp
+
+# Twig Template Cache
+/src/template-cache/*
+
+# Editor files
+*.swp
+
+# Mock data
+/mock/*
+
+# Library Files & Modules
+/vendor
+/node_modules
+
+# Certs & Keys
+*.pem
+

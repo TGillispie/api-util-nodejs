@@ -1,0 +1,6 @@
+## OARS API
+# OARS_PATH="https://apps-nefsc.fisheries.noaa.gov/oars/"
+OARS_PATH="http://localhost:3005"
+OARS_KEY="Paste key here w/ \r\n linebreaks:  Example key starts with '-----BEGIN PUBLIC KEY-----\r\n' and ends with '\r\n-----END PUBLIC KEY-----'"
+
+REQUEST_TYPE="fetch" # fetch or axios

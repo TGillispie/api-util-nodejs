@@ -1,0 +1,24 @@
+{
+  "name": "api-util-nodejs",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "This program is a utility for testing APIs in **NodeJS** JavaScript.  It Shadows a browser version for JS comparison.",
+  "main": "index.mjs",
+  "dependencies": {
+    "@types/node": "^17.0.24",
+    "dotenv": "^16.0.0",
+    "form-data": "^4.0.0",
+    "node-fetch": "^3.2.3"
+  },
+  "devDependencies": {
+    "axios": "^0.26.1",
+    "jasmine": "^4.1.0"
+  },
+  "scripts": {
+    "test": "jasmine --config=test/support/jasmine.json --color",
+    "dev-test": "nodemon --exec npm run test",
+    "dev": "nodemon"
+  },
+  "author": "Tyler Gillispie",
+  "license": "ISC"
+}
