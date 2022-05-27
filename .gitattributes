@@ -1,3 +1,5 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+# Ref https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings
 * text eol=lf
 
 *.webp binary
@@ -6,3 +8,7 @@
 *.jpeg binary
 *.gif binary
 
+*.wav binary
+
+*.gz binary
+*.zip binary
