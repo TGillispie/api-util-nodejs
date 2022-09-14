@@ -1,8 +1,10 @@
-API Util: This program is a utility for testing APIs in **NodeJS** JavaScript.  See the example in index.mjs for pragmatic use, or run the provided test cases.  Tests for the provided APIs are included in the ./test folder.  Use `npm test` to run them.
+API Util: This program is a utility for testing APIs in **NodeJS** JavaScript.  See the example in index.mjs for pragmatic use, or run the provided test cases.  Create and run new tests.  Tests for the provided APIs are included in the ./test folder.  Use `npm test` to run them.
 
 Add new APIs to the src/service folder.
 
-Write new Tests in the test folder.
+#### This is an example and testing framework primarily.
+#### Run any number of the provided tests or write new tests and run them in indvidually.
+#### *Write new Tests in the test folder; run them individually or in a suite.*
 
 (*Compare this project against the Browser version to see how similar JavaScript is in NodeJS programs vs. Browser programs. [api-util-browser](https://github.com/TGillispie/api-util-browser) *)
 
@@ -43,8 +45,11 @@ npm install
 # Add any required keys or credentials to .env.
 cp env-example .env
 
-# Run the program.
+# Run the example program.
 node index.mjs
+
+# - OR - run any number of the provided tests or write new tests and run them in indvidually.
+jasmine --config=test/support/jasmine.json  --color test/oars-four-zips-upload.mjs
 ```
 
 ### Get the Code
@@ -64,13 +69,15 @@ cp env-example .env
 ```
 
 ## Run
-
-Run the project using NodeJS.
+Run the program using jasmine and/or NodeJS. This is an example app and testing framework primarily.  Running tests is this repositories intended usecase.
 ```bash
-# This runs the program with nodemon; every time a src file changes it reloads.
+# Run any number of the provided tests or write new tests and run them in indvidually.
+jasmine --config=test/support/jasmine.json  --color test/oars-four-zips-upload.mjs
+
+# Or run the example program with nodemon; every time a src file changes it reloads.
 npm run dev
 
-# or run the program directly.
+# Or run the example API service implementation once.
 node index.mjs
 ```
 
@@ -104,6 +111,9 @@ npm test
 
 # Re-run tests every time a source file changes.
 npm run dev-test
+
+# Run a specific test.
+jasmine --config=test/support/jasmine.json  --color test/oars-four-zips-upload.mjs
 ```
 
 ### Test Files

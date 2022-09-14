@@ -1,5 +1,4 @@
 import { app } from '../src/app.mjs'
-import { appService } from '../src/lib/app-local.mjs'
 
 /**
  * Run some code after every request.
@@ -19,5 +18,4 @@ app.service.request = (p, o) => r(p, o).then(async (resp) => {
 
 export {
 	app,
-	appService
 }

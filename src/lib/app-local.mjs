@@ -1,4 +1,5 @@
 import { data } from '../state/global.mjs'
+import { readFile } from 'node:fs/promises'
 
 /**
  * Service helpers, and some file conversion.
@@ -6,8 +7,8 @@ import { data } from '../state/global.mjs'
 const appService = {
   /**
    * Get the response body as Text.
-   * 
-   * @param {Response} response 
+   *
+   * @param {Response} response
    * @returns {String}
    */
   respText: (response) => {
@@ -19,14 +20,17 @@ const appService = {
 
   /**
    * Get the response body as JSON.
-   * @param {Response} response 
+   * @param {Response} response
    * @returns {Object}
    */
   respJson: (response) => {
-    if (! response.json) {     // Axios support
+    // Try Axios support
+    if (! response.json) {
       return JSON.parse(response.data)
     }
-    return response.json()    // fetch support
+
+    // Try fetch support
+    return response.json()
   },
 }
 
@@ -55,15 +59,15 @@ const appConversion =  {
 const appFiles = (function() {
   /**
    * Open a file selection dialog for a user.
-   * 
+   *
    * Generally the user must activate the input button for security
    * reasons.  Create a button that fires off this input's click event
-   * if necessary. 
-   * 
+   * if necessary.
+   *
    * Chrome seems to let the click fire with a warning when initiated from
    * the console.
-   * 
-   * @param {*} handleFile 
+   *
+   * @param {*} handleFile
    */
   const selectFile = function (handleFile) {
     const t = document.createElement('input')
@@ -75,7 +79,7 @@ const appFiles = (function() {
   /**
    * Open select file dialog in browser.  Return the first selected file.
    * (For pragmatic file dialog notes see: selectFile.)
-   * 
+   *
    * @returns Blob|File
    */
   const getFile = () => {
@@ -94,6 +98,33 @@ const appFiles = (function() {
 })()
 
 /**
+ * Working with NodeJS Files.
+ */
+const appNodeFiles = (function() {
+  /**
+   * @param {*} handleFile
+   */
+  const selectFile = function (handleFile) {
+  }
+
+  /**
+   * Load a file from the file system.  Accept file open prperties.
+	 *
+	 * @param path  String  The path of a file to load.
+	 * @param props  Object  Read file operation properties: encoding, etc.
+   * @returns  Blob|File  Return file contents.
+   */
+  const getFile = async (path, props = null) => {
+		const contents = await readFile(path, props);
+		return contents;
+	}
+
+  return { getFile }
+})()
+
+
+
+/**
  * Some browser hacks and macros.  None are being used for this
  * projects API tests.
  */
@@ -101,7 +132,7 @@ const appMisc = {
   /**
    * Fetch an attachment from a web email client.  (Browser)
    * (Must be run from within the web clients domain.)
-   * 
+   *
    * @returns File as text.
    */
   setPem: function () {
@@ -113,29 +144,37 @@ const appMisc = {
 
   /**
    * Load and inject a JavaScript file from server into a browser.
-   * 
-   *  - Load this file into console - 
+   *
+   *  - Load this file into console -
    * Update the URL and then either call or paste the following IIFE in
    * a browser console.
    */
   appendScript: function() {
     ((url = 'http://localhost:8080/api-util.js') => {
-      r = document.getElementById('api-util')
+      const r = document.getElementById('api-util')
       r && document.body.removeChild(r)
-      
-      s = document.createElement('script')
+
+      const s = document.createElement('script')
       s.type = 'module'
       s.id = 'api-util'
       s.src = url
       // s.text = res   // If using fetch.
-      document.body.appendChild(s)    
+      document.body.appendChild(s)
     })()
   },
 }
 
 export {
-  appFiles,
+  // File Support
+	appFiles,
+	appNodeFiles,
+
+	// String Manipulation
   appConversion,
+
+	// HTTP Helpers
   appService,
+
+	// Misc.
   appMisc
 }
