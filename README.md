@@ -1,10 +1,12 @@
-API Util: This program is a utility for testing APIs in **NodeJS** JavaScript.  See the example in index.mjs for pragmatic use, or run the provided test cases.  Create and run new tests.  Tests for the provided APIs are included in the ./test folder.  Use `npm test` to run them.
+*This is a testing framework primarily (for APIs) with several tests provided.*
+*There is also an example application implemention of a basic service call.*
+*Run any number of the provided tests or write new tests and run them indvidually.*
+
+This code was written with **NodeJS** JavaScript.
+
+See [Quick Setup](#quick-setup) to get started right away.
 
 Add new APIs to the src/service folder.
-
-#### This is an example and testing framework primarily.
-#### Run any number of the provided tests or write new tests and run them in indvidually.
-#### *Write new Tests in the test folder; run them individually or in a suite.*
 
 (*Compare this project against the Browser version to see how similar JavaScript is in NodeJS programs vs. Browser programs. [api-util-browser](https://github.com/TGillispie/api-util-browser) *)
 
