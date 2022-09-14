@@ -1,4 +1,6 @@
-import { app, appService } from './test-app.mjs'
+import { app } from './test-app.mjs'
+import { appService } from '../src/lib/app-local.mjs'
+
 import wavZipBase64 from './assets/wav-zip-base64.mjs'
 import wavGzBase64 from './assets/wav-gz-base64.mjs'
 import wavWavBase64 from './assets/wav-wav-base64.mjs'

@@ -1,4 +1,4 @@
-import { app } from './src/app.mjs' 
+import { app } from './src/app.mjs'
 import { appService } from './src/lib/app-local.mjs'
 
 // Leave a general message in the browser.
@@ -8,7 +8,7 @@ const msg = [
   "pragmatic use or run the provided test cases.  Tests for the",
   "provided APIs are included in the ./test folder.  Use `npm test`",
   "to run them.",
- 
+
   "\n\tAdd new APIs to the src/service folder.",
 
   "\n\tWrite new Tests in the ./test folder.",
@@ -42,12 +42,12 @@ app.service.download('test.txt')
         return text
       })
 
-    // Always return the original response.
+    // Always return the original response for completeness.
     return resp
   })
   .then(async resp => {
     const rc = resp.clone()
-    const body = await appService.respJson(rc)
+    const body = await appService.respText(rc)
 
     // Display a subset of the response object.
     console.log('Response Subset: %o', {

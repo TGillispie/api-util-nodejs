@@ -1,4 +1,8 @@
-import { app, appService } from './test-app.mjs'
+import { app } from './test-app.mjs'
+import { appService } from '../src/lib/app-local.mjs'
+
+
+exit;
 
 describe("oars file list", () => {
   const location = ''
