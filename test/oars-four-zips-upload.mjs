@@ -18,9 +18,9 @@ describe("oars various sized zip uploads", () => {
     "STATUS_TYPE": "SUCCESS"
   }
 
-	const options = { encoding: 'base64' }
- 	const contentType = 'application/zip'
-	const assets = 'test/assets'
+  const options = { encoding: 'base64' }
+  const contentType = 'application/zip'
+  const assets = 'test/assets'
 
   it("upload 80268.zip file", async () => {
     const filename = '80268.zip'
