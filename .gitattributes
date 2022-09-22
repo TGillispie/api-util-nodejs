@@ -1,8 +1,13 @@
 * text eol=lf
 
+# Image Files
 *.webp binary
 *.png binary
 *.jpg binary
 *.jpeg binary
 *.gif binary
+
+# Archive Files
+*.zip binary
+
 
