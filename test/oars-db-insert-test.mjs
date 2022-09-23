@@ -1,5 +1,5 @@
-import { app, appService } from './test-app.mjs'
-// import { appService } from '../src/lib/app-local.mjs'
+import { app } from './test-app.mjs'
+import { appService } from '../src/lib/app-local.mjs'
 
 describe("oars db insert", () => {
 	let pk = 22204
@@ -37,8 +37,8 @@ describe("oars db insert", () => {
 	 *  3. sanity check is required.
 	 *  4. no way to delete a record w/ primary key via API.
 	 */
-	it("insert records", async () => {
-		const result = await app.service.insert(table, apiOptions)
+	xit("insert records", async () => {
+		const result = await app.service('oars').insert(table, apiOptions)
 			.then(appService.respJson)
 
 		const value = {
@@ -46,6 +46,16 @@ describe("oars db insert", () => {
 			"STATUS_MESSAGE": "File processed successfully",
 			"STATUS_TYPE": "SUCCESS"
 		}
+ 		/* const value = {
+			POSTED: {
+				FILENAME: 'magoo.glue.js',
+				KEY: 'Key was sent.', 
+				API_ENV: 'DEVELOPMENT', 
+				DB_ENV: 'DEVELOPMENT', 
+				PROJECT: 'demo', 
+				FILE: 'File was sent.'
+			}
+		}*/
 
 		expect(result).toEqual(value)
 	})
@@ -56,7 +66,7 @@ describe("oars db insert", () => {
 	it("show an error", async () => {
     pk = pk + 1
 		delete apiOptions.project
-    const result = await app.service.insert(table, apiOptions)
+    const result = await app.service('oars').insert(table, apiOptions)
       .then(appService.respJson)
 
 		// const value = {

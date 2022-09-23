@@ -9,7 +9,7 @@ describe("oars file download", () => {
 	 * Test download a file.
 	 */
 	it("download file", async () => {
-		const result = await app.service.download(filename)
+		const result = await app.service('oars').download(filename)
 			.then(appService.respText)
 
 		const value = 'Hello world!!!\nThis is a second line :)\nLets do a third, why not.\n'
@@ -21,7 +21,7 @@ describe("oars file download", () => {
 	 * This is a place holder and has not be tested yet.
 	 */
 	xit("download file at path", async () => {
-		const result = await app.service.download(filename, {
+		const result = await app.service('oars').download(filename, {
 			getFileLocation: '/some/path'
 		}).then(appService.respText)
 
