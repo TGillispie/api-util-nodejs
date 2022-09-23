@@ -1,4 +1,5 @@
-import { data } from '../state/global.mjs'
+import { appState } from '../state/global.mjs'
+import { Buffer, Blob } from 'node:buffer'
 import { readFile } from 'node:fs/promises'
 
 /**
@@ -88,7 +89,7 @@ const appFiles = (function() {
         // file has size, name, type and other properties.
         const file = this.files[0]
         // Store file in local state.
-        data.file = await file.text()
+        appState.file = await file.text()
         resolve(file)
       })
     })
@@ -115,8 +116,9 @@ const appNodeFiles = (function() {
    * @returns  Blob|File  Return file contents.
    */
   const getFile = async (path, props = null) => {
-		const contents = await readFile(path, props);
-		return contents;
+		const buf = readFile(path, props)
+		const contents = new Blob([buf])
+		return contents
 	}
 
   return { getFile }
@@ -136,9 +138,9 @@ const appMisc = {
    * @returns File as text.
    */
   setPem: function () {
-    return fetch(data.emailAttchmentUrl)
+    return fetch(appState.emailAttchmentUrl)
     .then(async resp => {
-      data.pem = await resp.text()
+      appState.pem = await resp.text()
     })
   },
 

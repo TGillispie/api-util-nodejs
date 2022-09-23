@@ -3,15 +3,12 @@ import { Blob } from 'buffer'
 import { Readable } from 'stream'
 
 // 3rd Party + Ployfills
-import FormData from 'form-data'
+import { FormData } from  'formdata-node'
 
 // App
 import service from '../service/service.mjs'
-import { 
-  appConversion, 
-  // appFiles
-} from '../lib/app-local.mjs'
-import { data } from '../state/global.mjs'
+import { appConversion } from '../lib/app-local.mjs'
+import { appState } from '../state/global.mjs'
 
 /**
  * Handle all OARS requests with custom OARS specific options.
@@ -47,7 +44,7 @@ const decorateRequestBody = async function(formData) {
   // getFiles requires user interaction, except for Chrome which might show a warning.
   // const key = await appFiles.getFile()
   // Key is hard coded for test automation.
-  const key = new Blob([data.oarsKey], { type: 'text/plain' })
+  const key = new Blob([appState.oarsKey], { type: 'text/plain' })
 
   const common = {
     key: await key.text(),
@@ -79,9 +76,9 @@ const decorataeRequestHeader = function(headers) {
   // ToDo: Simplify this to use a standard object.
   typeof headers.append === 'function' // Browser support.
     ? headers.append('Authorization',
-      `Bearer ${appConversion.encodeHeader(data.pemCache)}`)
+      `Bearer ${appConversion.encodeHeader(appState.pemCache)}`)
     : headers['Authorization'] =
-      `Bearer ${appConversion.encodeHeader(data.pemCache)}`
+      `Bearer ${appConversion.encodeHeader(appState.pemCache)}`
 
   return headers
 }
@@ -138,7 +135,7 @@ const FormDataFactory = function(data) {
  * @returns {Response}
  */
 service.download = function (filename, options) {
-  const path = `${data.oarsPath}`
+  const path = `${appState.oarsPath}`
   const formData = FormDataFactory({
     ... options,
     filename,
@@ -158,19 +155,15 @@ service.download = function (filename, options) {
  * @param {Object} options  [getFileLocation, contentType, ]
  * @returns {Response}
  */
-service.upload = function (filename, options) {
-  const path = `${data.oarsPath}`
+service.upload = async function (filename, options) {
+  const path = `${appState.oarsPath}`
+	
+	// FormDataFactory converts parameters to UPPER_SNAKE for OARS.
   const formData = FormDataFactory({
     filename: filename,
     type: 'store',
   })
-
-  // ToDo: Is there a better way to get content-type; a File object of some kind in NodeJS.  (bonus for node, browser, and deno)
-  const file = Readable.from([ options.file ]) // create stream
-  formData.append('file', file, {
-    filename,
-    contentType: options.contentType
-  })
+	formData.append('file', options.file, filename)
 
   return makeRequest(path, {
     method: 'post', 
@@ -186,7 +179,7 @@ service.upload = function (filename, options) {
  * @returns {Response}
  */
 service.list = function (location, options) {
-  const path = `${data.oarsPath}`
+  const path = `${appState.oarsPath}`
   const formData = FormDataFactory({
     ... options,
     type: 'NAMES',
@@ -213,8 +206,9 @@ service.list = function (location, options) {
  * @returns {Response}
  */
 service.insert = function(table, options) {
-  const path = `${data.oarsPath}`
-  let rows = null // Table data, grouped by table.
+  const path = `${appState.oarsPath}`
+  const filename = 'magoo.glue.js'
+	let rows = null // Table data, grouped by table.
   const meta = {
     HEADER: {} // Additional options
   }
@@ -232,20 +226,17 @@ service.insert = function(table, options) {
   
   // ToDo: NodeJS: Readable ?= Browser|Deno: Blob
   // ToDo: Find a cross platform way to create file streams and blobs.
-  const file = Readable.from([  // stream
+  const file = new Blob([
     JSON.stringify([meta, rows])
   ])
 
   // Build a FormData object.
   const formData = FormDataFactory({
-    filename: 'magoo.glue.js'
+    filename
   })
 
   // Add a file to the formData object.
-  formData.append('FILE', file, {
-    filename: 'magoo.glue.js',
-    contentType: 'application/json'
-  })
+  formData.append('file', file )
 
   return makeRequest(path, {
     body: formData,

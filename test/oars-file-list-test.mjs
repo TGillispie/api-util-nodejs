@@ -2,8 +2,6 @@ import { app } from './test-app.mjs'
 import { appService } from '../src/lib/app-local.mjs'
 
 
-exit;
-
 describe("oars file list", () => {
   const location = ''
   const apiOptions = {
@@ -12,8 +10,8 @@ describe("oars file list", () => {
 	/**
 	 * 
 	 */
-	it("show file list", async () => {
-		const result = await app.service.list(location, apiOptions)
+	xit("show file list", async () => {
+		const result = await app.service('oars').list(location, apiOptions)
       .then(appService.respJson)
       
     const value = {

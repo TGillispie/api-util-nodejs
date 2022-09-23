@@ -5,7 +5,7 @@ dotenv.config()
 /**
  * Generic Data Model
  */
-const data = {
+const appState = {
   requestType: `${process.env.REQUEST_TYPE}`,
   file: null,
   // Misc. method for loading a file attachement.
@@ -17,4 +17,4 @@ const data = {
   oarsKey: `${process.env.OARS_KEY}`,
 }
 
-export { data }
+export { appState }

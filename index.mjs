@@ -29,7 +29,7 @@ console.log(msg)
 
 
 // *** Begin Example: Quick and dirty app use.
-app.service.download('test.txt')
+app.service('oars').download('test.txt')
   .then(resp => {
     // Clone response to leave the original response unchanged.
     const rc = resp.clone()
